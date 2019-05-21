@@ -17,7 +17,7 @@
         </div>
         <footer class="row pt-2">
             <div class="col-4">
-                <label for="time">Время</label>
+                <label for="time">Time</label>
                 <input class="form-control" id="time" type="text" v-model="time">
             </div>
             <div class="col-4">
