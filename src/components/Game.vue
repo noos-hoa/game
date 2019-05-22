@@ -41,7 +41,7 @@
 </template>
 
 <script>
-    import { random } from 'lodash';
+    import {random} from 'lodash';
     import PopUp from './PopUp';
 
 
@@ -58,7 +58,7 @@
                     cell: -1
                 },
                 scores: {
-                    gamer:0,
+                    gamer: 0,
                     pc: 0
                 },
                 misses: [],
@@ -88,17 +88,17 @@
                     return this.highlight.row === row && this.highlight.cell === cell;
                 }
             },
-            cellClass(){
-                return (row,cell) => {
+            cellClass() {
+                return (row, cell) => {
                     const key = `${row},${cell}`;
-                    if(this.isHighlight(row,cell)){
+                    if (this.isHighlight(row, cell)) {
                         return 'bg-warning';
                     }
-                    if(this.hits.includes(key)){
-                        return  'bg-success'
+                    if (this.hits.includes(key)) {
+                        return 'bg-success'
                     }
-                    if(this.misses.includes(key)){
-                        return  'bg-danger'
+                    if (this.misses.includes(key)) {
+                        return 'bg-danger'
                     }
                     return 'bg-primary'
                 }
@@ -106,7 +106,7 @@
         },
         methods: {
             onCellClick(row, cell) {
-                if(this.isHighlight(row, cell)){
+                if (this.isHighlight(row, cell)) {
                     this.scores.gamer++;
                     this.hits.push(`${row},${cell}`);
                     this.runStep();
@@ -116,17 +116,17 @@
                 this.resetData();
                 this.runStep();
             },
-            onCloseModal(){
+            onCloseModal() {
                 this.resetData();
                 this.isShowModal = false;
             },
-            runStep(){
-                if(this.stepTimeout) clearTimeout(this.stepTimeout);
-                if(this.scores.gamer < this.maxScore && this.scores.pc < this.maxScore){
+            runStep() {
+                if (this.stepTimeout) clearTimeout(this.stepTimeout);
+                if (this.scores.gamer < this.maxScore && this.scores.pc < this.maxScore) {
                     this.highlight = this.getNewPosition();
                     this.wasShows.push(`${this.highlight.row},${this.highlight.cell}`);
 
-                    this.stepTimeout = setTimeout(()=>{
+                    this.stepTimeout = setTimeout(() => {
                         this.scores.pc++;
                         this.misses.push(`${this.highlight.row},${this.highlight.cell}`);
                         this.runStep();
@@ -137,19 +137,19 @@
                     this.showResults();
                 }
             },
-            getNewPosition(){
+            getNewPosition() {
                 const position = {
-                    row: random(0,9),
-                    cell: random(0,9)
+                    row: random(0, this.rows - 1),
+                    cell: random(0, this.cells - 1)
                 };
-                if(this.wasShows.includes(`${position.row},${position.cell}`)){
+                if (this.wasShows.includes(`${position.row},${position.cell}`)) {
                     return this.getNewPosition();
                 } else {
                     return position;
                 }
             },
-            showResults(){
-                if(this.scores.gamer > this.scores.pc){
+            showResults() {
+                if (this.scores.gamer > this.scores.pc) {
                     this.modalText = 'Congratulations, You are win';
                 } else {
                     this.modalText = 'Sorry, But you are lose';
@@ -157,7 +157,7 @@
                 this.isShowModal = true;
 
             },
-            resetData(){
+            resetData() {
                 this.scores.pc = 0;
                 this.scores.gamer = 0;
                 this.hits = [];
