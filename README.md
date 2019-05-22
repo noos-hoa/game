@@ -1,4 +1,4 @@
-# test-vue-js
+# The Game on Vue.js
 
 ## Project setup
 ```
